@@ -2,6 +2,9 @@ package dev.stefan.demo.Valiation;
 
 import java.util.regex.Pattern;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class SequenceRule implements ValidationRule {
 
 	public static final String SEQUENCE_REPEATED_ERROR = "Password must not contain any sequence of characters immediately followed by the same sequence.";

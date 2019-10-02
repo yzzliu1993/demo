@@ -2,6 +2,9 @@ package dev.stefan.demo.Valiation;
 
 import java.util.regex.Pattern;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class CharRule implements ValidationRule {
 
 	public static final String LETTER_DIGIT_ERROR = "Password consist of a mixture of lowercase letters and numerical digits only, with at least one of each.";

@@ -1,7 +1,9 @@
 package dev.stefan.demo.Valiation;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public class LengthRule implements ValidationRule {
 	
 	public static final String LENGTH_ERROR = "Length should be 5 or 12.";

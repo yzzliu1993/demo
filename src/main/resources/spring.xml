@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util
+      http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+	<bean id="passwordService"
+		class="dev.stefan.demo.Service.PasswordService" />
+
+	<bean id="lengthRule" class="dev.stefan.demo.Valiation.LengthRule" />
+	<bean id="charRule" class="dev.stefan.demo.Valiation.CharRule" />
+	<bean id="sequenceRule"
+		class="dev.stefan.demo.Valiation.SequenceRule" />
+
+	<util:list id="passwordRuleList"
+		list-class="java.util.ArrayList">
+		<ref bean="lengthRule" />
+		<ref bean="charRule" />
+		<ref bean="sequenceRule" />
+	</util:list>
+
+</beans>

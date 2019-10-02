@@ -3,9 +3,11 @@ package dev.stefan.demo.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import dev.stefan.demo.Valiation.ValidationRule;
 
+@Component
 public class PasswordService {
 
 	@Autowired
