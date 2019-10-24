@@ -1,29 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="
-       http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd
-       http://www.springframework.org/schema/util
-      http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<bean id="passwordService"
-		class="dev.stefan.demo.Service.PasswordService" />
 
-	<bean id="lengthRule" class="dev.stefan.demo.Valiation.LengthRule" />
-	<bean id="charRule" class="dev.stefan.demo.Valiation.CharRule" />
-	<bean id="sequenceRule"
-		class="dev.stefan.demo.Valiation.SequenceRule" />
+<context:property-placeholder location="classpath:/maxLengthRule.properties" file-encoding="UTF-8"/>
+<context:property-placeholder location="classpath:/minLengthRule.properties" file-encoding="UTF-8"/>
+<context:property-placeholder location="classpath:/lowerCharRule.properties" file-encoding="UTF-8"/>
+<context:property-placeholder location="classpath:/numericalDigitsRule.properties" file-encoding="UTF-8"/>
+<context:property-placeholder location="classpath:/sequenceRule.properties" file-encoding="UTF-8"/>
+<context:property-placeholder location="classpath:/specialCharRule.properties" file-encoding="UTF-8"/>
+<context:property-placeholder location="classpath:/upperCharRule.properties" file-encoding="UTF-8"/>
 
-	<util:list id="passwordRuleList"
-		list-class="java.util.ArrayList">
-		<ref bean="lengthRule" />
-		<ref bean="charRule" />
-		<ref bean="sequenceRule" />
-	</util:list>
+ 		
+ 		
+ 		
+		<bean id="passwordService" class="dev.stefan.demo.Service.PasswordService" />
+		
+		<bean id="maxLengthRule" class="dev.stefan.demo.Rule.MaxLengthRule" />
+		<bean id="minLengthRule" class="dev.stefan.demo.Rule.MinLengthRule" />
+		
+		<bean id="lowerCharRule" class="dev.stefan.demo.Rule.LowerCharRule" />
+		<bean id="upperCharRule" class="dev.stefan.demo.Rule.UpperCharRule" />
+		<bean id="specialCharRule" class="dev.stefan.demo.Rule.SpecialCharRule" />
+		<bean id="numericalDigitsRule" class="dev.stefan.demo.Rule.NumericalDigitsRule" />
+		
+		<bean id="sequenceRule" class="dev.stefan.demo.Rule.SequenceRule" />
+
+		<bean id="ruleList" class="java.util.ArrayList">
+			<constructor-arg>
+				<list>
+					<ref bean="maxLengthRule"/>
+					<ref bean="minLengthRule"/>
+					<ref bean="lowerCharRule"/>
+					<ref bean="upperCharRule"/>
+					<ref bean="specialCharRule"/>
+					<ref bean="numericalDigitsRule"/>
+					<ref bean="sequenceRule"/>
+				</list>
+			</constructor-arg>
+		</bean>
+
+
 
 </beans>

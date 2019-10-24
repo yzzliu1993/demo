@@ -2,29 +2,24 @@ package dev.stefan.demo.Service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
-import dev.stefan.demo.Valiation.ValidationRule;
+import dev.stefan.demo.Rule.Rule;
 
 @Component
-public class PasswordService {
+public class PasswordService extends ValidationService {
 
-	@Autowired
-	private List<ValidationRule> passwordRuleList;
-
-	public String validate(String password) {
-		String errorMsg = "";
+	@Override
+	public void validate(String password) {
 		
-		for(int i = 0 ; i < passwordRuleList.size() ; i++) {
-			ValidationRule validationRule = passwordRuleList.get(i);
-			if(!validationRule.validate(password)) {
-				errorMsg = validationRule.getMessage();
-				break;
-			}
-		}
-
-		return errorMsg;
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+		List<Rule> ruleList = (List<Rule>) ctx.getBean("ruleList");
+		
+		
+		for(Rule rule : ruleList)
+			System.out.println( rule.validate(password));
 	}
 
 }
