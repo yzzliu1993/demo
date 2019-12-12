@@ -12,44 +12,32 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
+		<context:component-scan base-package="com.passwordValidate.*" />
 
-<context:property-placeholder location="classpath:/maxLengthRule.properties" file-encoding="UTF-8"/>
-<context:property-placeholder location="classpath:/minLengthRule.properties" file-encoding="UTF-8"/>
-<context:property-placeholder location="classpath:/lowerCharRule.properties" file-encoding="UTF-8"/>
-<context:property-placeholder location="classpath:/numericalDigitsRule.properties" file-encoding="UTF-8"/>
-<context:property-placeholder location="classpath:/sequenceRule.properties" file-encoding="UTF-8"/>
-<context:property-placeholder location="classpath:/specialCharRule.properties" file-encoding="UTF-8"/>
-<context:property-placeholder location="classpath:/upperCharRule.properties" file-encoding="UTF-8"/>
-
- 		
- 		
- 		
-		<bean id="passwordService" class="dev.stefan.demo.Service.PasswordService" />
+		<bean id="lengthRule" class="com.passwordValidate.Rule.LengthRule" >
+			<constructor-arg name="regex" value="[1-9][0-9]{4,11}" />
+			<constructor-arg name="message" value="Must be between 5 and 12 characters in length." />
+		</bean>
 		
-		<bean id="maxLengthRule" class="dev.stefan.demo.Rule.MaxLengthRule" />
-		<bean id="minLengthRule" class="dev.stefan.demo.Rule.MinLengthRule" />
+		<bean id="charRule" class="com.passwordValidate.Rule.CharRule">
+			<constructor-arg name="regex" value="^(?=.*[0-9])(?=.*[a-z])([a-z0-9]+)$" />
+			<constructor-arg name="message" value="Must consist of a mixture of lowercase letters and numerical digits only, with at least one of each." />
+		</bean>
 		
-		<bean id="lowerCharRule" class="dev.stefan.demo.Rule.LowerCharRule" />
-		<bean id="upperCharRule" class="dev.stefan.demo.Rule.UpperCharRule" />
-		<bean id="specialCharRule" class="dev.stefan.demo.Rule.SpecialCharRule" />
-		<bean id="numericalDigitsRule" class="dev.stefan.demo.Rule.NumericalDigitsRule" />
+		<bean id="sequenceRule" class="com.passwordValidate.Rule.SequenceRule">
+			<constructor-arg name="regex" value="(\\w{1,})\\1" />
+			<constructor-arg name="message" value="Must not contain any sequence of characters immediately followed by the same sequence." />
+		</bean>
 		
-		<bean id="sequenceRule" class="dev.stefan.demo.Rule.SequenceRule" />
-
 		<bean id="ruleList" class="java.util.ArrayList">
 			<constructor-arg>
 				<list>
-					<ref bean="maxLengthRule"/>
-					<ref bean="minLengthRule"/>
-					<ref bean="lowerCharRule"/>
-					<ref bean="upperCharRule"/>
-					<ref bean="specialCharRule"/>
-					<ref bean="numericalDigitsRule"/>
+					<ref bean="lengthRule"/>
+					<ref bean="charRule"/>
 					<ref bean="sequenceRule"/>
 				</list>
 			</constructor-arg>
 		</bean>
-
 
 
 </beans>
